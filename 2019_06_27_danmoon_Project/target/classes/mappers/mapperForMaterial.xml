@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.shortsentence.Dao.MaterialDao">
+	
+	<select id="selectAMaterialForBeforeMorning" resultType="com.project.shortsentence.Dto.MaterialDto">
+		<![CDATA[ select material_idx_pk, material_title from writer_post_materiallist where material_distribute_date = date_format(now(), "%Y-%c-%d") and material_distribute_time > time_format('00:00:00', '%H:%i:%s') and material_distribute_time <= time_format('06:59:59', '%H:%i:%s'); ]]>
+	</select>
+	
+	<select id="selectAMaterialForMorning" resultType="com.project.shortsentence.Dto.MaterialDto">
+		<![CDATA[ select material_idx_pk, material_title from writer_post_materiallist where material_distribute_date = date_format(now(), "%Y-%c-%d") and material_distribute_time > time_format('06:59:59', '%H:%i:%s') and material_distribute_time <= time_format('17:29:59', '%H:%i:%s'); ]]>
+	</select>
+	
+	<select id="selectAMaterialForAfternoon" resultType="com.project.shortsentence.Dto.MaterialDto">
+		<![CDATA[ select material_idx_pk, material_title from writer_post_materiallist where material_distribute_date = date_format(now(), "%Y-%c-%d") and material_distribute_time > time_format('17:29:29', '%H:%i:%s') and material_distribute_time <= time_format('23:59:59', '%H:%i:%s'); ]]>
+	</select>
+	
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.shortsentence.Dao.MemberDao">
+	<select id="selectAMem" parameterType="hashmap" resultType="com.project.shortsentence.Dto.MemberDto">
+		select mem_idx, mem_email, mem_nickname, mem_type, mem_regdate from writer_mem where mem_email=#{email} and mem_type=#{type}
+	</select>
+	
+	<select id="loginMem" parameterType="hashmap" resultType="com.project.shortsentence.Dto.MemberDto">
+		select mem_idx, mem_email, mem_nickname, mem_type, mem_regdate from writer_mem where mem_email=#{email} and mem_pwd=password(#{password})
+	</select>
+	
+	<insert id="joinMembership" parameterType="hashmap">
+		insert into writer_mem(mem_email, mem_pwd, mem_nickname, mem_type) values(#{email}, password(#{password}), #{nickname}, #{type})
+	</insert>
+	
+	<select id="dupcheckEmail" parameterType="hashmap" resultType="com.project.shortsentence.Dto.MemberDto">
+		select mem_idx, mem_email, mem_nickname, mem_type, mem_regdate from writer_mem where mem_email=#{email} and mem_type=#{type}
+	</select>
+	
+	<select id="dupcheckNickname" parameterType="hashmap" resultType="com.project.shortsentence.Dto.MemberDto">
+		select mem_nickname from writer_mem where mem_nickname=#{nickname}
+	</select>
+	
+	<select id="searchMem" parameterType="String" resultType="map">
+		select mem.mem_idx, mem.mem_nickname, mem.mem_email, count(post.p_idx_pk) countpost
+		from writer_mem as mem
+		left join 
+		(select p_idx_pk, p_mem_idx_fk
+		from writer_post) as post
+		on mem.mem_idx = post.p_mem_idx_fk
+		where mem.mem_nickname like concat('%',#{searchKeyWord},'%')
+		group by mem.mem_idx;
+	</select>
+	
+	
+</mapper>

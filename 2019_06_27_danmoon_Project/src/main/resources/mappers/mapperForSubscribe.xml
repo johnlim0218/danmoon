@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.shortsentence.Dao.SubscribeDao">
+	<insert id="insertSubscribe" parameterType="hashmap">
+		insert into writer_subscribe (s_memidx_fk, s_subsmemidx_fk) values (#{s_memidx}, #{s_subsmemidx})
+	</insert>
+	
+	<delete id="deleteSubscribe" parameterType="int">
+		delete from writer_subscribe where s_memidx_fk = #{s_memidx} and s_subsmemidx_fk = #{s_subsmemidx}
+	</delete>
+	
+	<select id="selectSubsscibeList" parameterType="int" resultType="map">
+		SELECT subs.s_memidx_fk, subs.s_subsmemidx_fk, mem.mem_idx, mem.mem_nickname, COUNT(post.p_idx_pk) countpost
+		FROM writer_mem AS mem
+		JOIN writer_subscribe AS subs ON mem.mem_idx = subs.s_subsmemidx_fk
+		LEFT JOIN writer_post AS post ON mem.mem_idx = post.p_mem_idx_fk
+		WHERE subs.s_memidx_fk = #{s_memidx}
+		GROUP BY mem.mem_idx;
+	</select>
+	
+	
+	
+</mapper>

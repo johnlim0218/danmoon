@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.shortsentence.Dao.PostDao">
+	
+	<insert id="insertNewPost" parameterType="hashmap">
+		insert into writer_post(p_mem_idx_fk, p_material_idx_fk, p_material, p_content, p_public) values(#{mem_idx}, #{material_idx}, #{material}, #{content}, #{public})
+	</insert>
+	
+	<select id="selectPosts" parameterType="hashmap" resultType="com.project.shortsentence.Dto.PostDto">
+		select p_idx_pk, p_mem_idx_fk, p_material, p_content, p_regdate, p_public, p_hit from writer_post where p_mem_idx_fk=#{mem_idx}
+	</select>
+
+	<select id="selectPostList" parameterType="int" resultType="map">
+		select p_idx_pk, p_material, p_content, p_regdate, p_likeit, mem_nickname from writer_post inner join writer_mem on p_public = 'y' and p_mem_idx_fk = mem_idx and p_material_idx_fk = #{material_idx} 
+	</select>
+	
+	<select id="selectUserPostlist" parameterType="int" resultType="map">
+	
+		(
+		SELECT s_idx_pk, s_memidx_fk, s_subsmemidx_fk, p_idx_pk, p_material_idx_fk, p_material, p_regdate
+		FROM writer_post
+		LEFT OUTER
+		JOIN writer_subscribe ON p_mem_idx_fk = s_subsmemidx_fk AND s_memidx_fk = #{mem_idx}
+		WHERE p_mem_idx_fk = #{user_idx} and p_public="y") UNION
+		(
+		SELECT s_idx_pk, s_memidx_fk, s_subsmemidx_fk, p_idx_pk, p_material_idx_fk, p_material, p_regdate
+		FROM writer_subscribe
+		LEFT JOIN writer_post ON writer_post.p_mem_idx_fk = writer_subscribe.s_subsmemidx_fk and p_public="y"
+		WHERE s_memidx_fk = #{mem_idx} AND s_subsmemidx_fk = #{user_idx});
+	
+	</select>
+	
+	<select id="selectUserPost" parameterType="int" resultType="map">
+		select p_idx_pk, p_material_idx_fk, p_content, p_material, p_regdate, p_public from writer_post where p_idx_pk = #{p_idx} 
+	</select>
+	
+	<select id="selectMyPostList" parameterType="int" resultType="map">
+		select p_idx_pk, p_material, p_regdate from writer_post where p_mem_idx_fk = #{mem_idx}
+	</select>
+	
+	<update id="updateMyPost" parameterType="hashmap">
+		update writer_post set p_content=#{content}, p_update=now(), p_public=#{public} where p_idx_pk=#{p_idx}
+	</update>
+	
+	<delete id="deleteMyPost" parameterType="int">
+		delete from writer_post where p_idx_pk = #{p_idx}
+	</delete>
+	
+</mapper>

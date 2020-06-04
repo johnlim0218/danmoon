@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/drawer_menu_home"
+        android:icon="@drawable/ic_baseline_home_24px"
+        android:title="글 목록"
+        android:checked="true"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/drawer_menu_myroom"
+        android:icon="@drawable/ic_round_person_24px"
+        android:title="나의 공간"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/drawer_menu_subscribe"
+        android:icon="@drawable/ic_baseline_bookmarks_24px"
+        android:title="구독"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/drawer_menu_tempsave"
+        android:icon="@drawable/ic_baseline_work_24px"
+        android:title="임시저장 목록"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/drawer_menu_setting"
+        android:icon="@drawable/ic_round_settings_24px"
+        android:title="설정"
+        app:showAsAction="always"
+        />
+    </group>
+
+
+</menu>

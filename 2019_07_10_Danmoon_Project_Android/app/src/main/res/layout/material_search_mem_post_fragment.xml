@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/userpost_read_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:nestedScrollingEnabled="false"
+    android:gravity="top|start"
+    android:orientation="vertical"
+    tools:context=".Fragment.User_PostFragment">
+
+    <EditText
+        android:id="@+id/userpost_content_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elegantTextHeight="false"
+        android:fontFamily="@font/nanumgothic"
+        android:gravity="top|start"
+        android:lineSpacingMultiplier="2"
+        android:padding="20dp"
+        android:singleLine="false"
+        android:textSize="15sp"
+        android:text="content">
+
+    </EditText>
+
+</LinearLayout>
